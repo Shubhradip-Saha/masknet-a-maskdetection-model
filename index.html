@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      body {
+        background-image: url('https://www.bmj.com/sites/default/files/sites/defautl/files/attachments/bmj-article/2017/06/who_logo.jpg');
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script>
+      function validateLocation() {
+        var locationInput = document.getElementById("location");
+        var searchButton = document.getElementById("searchButton");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (locationInput.value || locationInput.value === "SRMIST KTR") {
+          searchButton.disabled = false;
+          errorMessage.style.display = "none";
+        } else {
+          searchButton.disabled = true;
+          errorMessage.style.display = "block";
+        }
+      }
+
+      function validateAadhar() {
+        var aadharInput = document.getElementById("aadhar");
+        var searchButton = document.getElementById("searchButton");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (aadharInput.value.length !== 12) {
+          searchButton.disabled = true;
+          errorMessage.style.display = "block";
+        } else {
+          errorMessage.style.display = "none";
+          validateLocation(); // Re-validate location after Aadhar validation
+        }
+      }
+
+      function getCurrentLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              var latitude = position.coords.latitude;
+              var longitude = position.coords.longitude;
+              document.getElementById("location").value = latitude + ", " + longitude;
+              validateLocation();
+            },
+            function (error) {
+              console.log("Error getting location:", error);
+            }
+          );
+        } else {
+          console.log("Geolocation is not supported by this browser.");
+        }
+      }
+
+      function toggleLocationInput(checkbox) {
+        var locationInput = document.getElementById("location");
+
+        if (checkbox.checked) {
+          getCurrentLocation();
+          locationInput.disabled = true;
+        } else {
+          locationInput.value = "";
+          locationInput.disabled = false;
+        }
+      }
+
+      function validateSearch() {
+        var locationInput = document.getElementById("location");
+        var searchButton = document.getElementById("searchButton");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (locationInput.value || locationInput.value === "SRMIST KTR") {
+          searchButton.disabled = false;
+          errorMessage.style.display = "none";
+          window.location.href = 'http://127.0.0.1:5500/index2.html';
+        } else {
+          getCurrentLocation();
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <div class="box-form">
+      <div class="left">
+        <div class="overlay">
+          <h1>Login to MaskNet</h1>
+          <p>
+            Just a single click away from getting the best zone details with
+            personalised access to nearby Resources
+          </p>
+          <span>
+            <p>Login with social medias:</p>
+            <a href="https://accounts.google.com/"><i class="fa fa-google" aria-hidden="true"></i> Login with Gmail</a>
+            <a href="https://www.facebook.com/login/"><i class="fa fa-facebook" aria-hidden="true"></i> Login with Meta </a>
+          </span>
+        </div>
+      </div>
+
+      <div class="right">
+        <h5>Login</h5>
+        <p>
+          Having difficulty logging in? It might be due to heavy traffic? <a href="#" onclick="refreshPage()">Refresh Page</a>, it takes less than a minute.
+        </p>
+        <div class="inputs">
+          <input type="text" placeholder="Username" />
+          <br />
+          <input type="text" id="aadhar" placeholder="Aadhar Card Number/CitizenID" oninput="validateAadhar()" />
+          <br />
+          <input type="text" id="location" placeholder="Location" oninput="validateLocation()" />
+          <br />
+          
+        </div>
+
+        <br /><br />
+
+        <div class="remember-me--forget-password">
+          <label>
+            <input type="checkbox" name="item" onchange="toggleLocationInput(this)" checked />
+            <span class="text-checkbox">Use Current Coordinates</span>
+          </label>
+          <p>Need help with finding your location?</p>
+        </div>
+        <br class="return-to-main">
+        <button id="searchButton" onclick="validateSearch()" disabled>Search</button>
+        <p id="errorMessage" style="color: red; display: none;">Invalid Aadhar Card number or Location</p>
+      </div>
+    </div>
+    <!-- partial -->
+
+    <script>
+      function refreshPage() {
+        window.location.reload();
+      }
+
+      function validateLocation() {
+        var locationInput = document.getElementById("location");
+        var searchButton = document.getElementById("searchButton");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (locationInput.value || locationInput.value === "SRMIST KTR") {
+          searchButton.disabled = false;
+          errorMessage.style.display = "none";
+        } else {
+          searchButton.disabled = true;
+          errorMessage.style.display = "block";
+        }
+      }
+
+      function validateAadhar() {
+        var aadharInput = document.getElementById("aadhar");
+        var searchButton = document.getElementById("searchButton");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (aadharInput.value.length !== 12) {
+          searchButton.disabled = true;
+          errorMessage.style.display = "block";
+        } else {
+          errorMessage.style.display = "none";
+          validateLocation(); // Re-validate location after Aadhar validation
+        }
+      }
+
+      function getCurrentLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              var latitude = position.coords.latitude;
+              var longitude = position.coords.longitude;
+              document.getElementById("location").value = latitude + ", " + longitude;
+              validateLocation();
+            },
+            function (error) {
+              console.log("Error getting location:", error);
+            }
+          );
+        } else {
+          console.log("Geolocation is not supported by this browser.");
+        }
+      }
+
+      function toggleLocationInput(checkbox) {
+        var locationInput = document.getElementById("location");
+
+        if (checkbox.checked) {
+          getCurrentLocation();
+          locationInput.disabled = true;
+        } else {
+          locationInput.value = "";
+          locationInput.disabled = false;
+        }
+      }
+
+      function validateSearch() {
+        var locationInput = document.getElementById("location");
+        var searchButton        = document.getElementById("searchButton");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (locationInput.value || locationInput.value === "SRMIST KTR") {
+          searchButton.disabled = false;
+          errorMessage.style.display = "none";
+          window.location.href = 'http://127.0.0.1:5500/index2.html';
+        } else {
+          getCurrentLocation();
+        }
+      }
+    </script>
+  </body>
+</html>
+
+

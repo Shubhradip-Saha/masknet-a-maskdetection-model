@@ -1,2 +1,5 @@
-# masknet.github.io
-Social Business demonstrates the awareness among peers about a localities COVID -19 situation 
+# image processing 
+Capture face from drone feed . 
+Aim -regornition and mask detection
+
+Requirement - student database 
